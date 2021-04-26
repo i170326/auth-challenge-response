@@ -1,0 +1,20 @@
+Python: 3.7.9
+
+1. Tcp connection for server to client
+2. Test send and receive functions
+3. Create database file:
+	In command line:
+		sqlite3 users.db
+		.quit
+4. Add database connection function
+5. Add table creation function
+6. Add insert into table function
+7. Register User Functionality (listen=rcv):
+	server: listen
+	client: choose option to register =>listen
+	server: if option=register => send(registering) =>listen for username
+	client: send username
+	server: listen
+	client: send password.hash =>listen
+	server: insert into db => send(registeration successful)
+8. Test registeration
