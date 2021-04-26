@@ -14,10 +14,12 @@ def tcp_send(msg,conn):
     print("Sending message")
     conn.send(bytes(msg,"utf-8"))
 
-def tcp_receive(sock):
+def tcp_receive(conn):
+    print("Message Receiving started")
     full_msg = ''
     while True:
-        msg = sock.recv(8)
+        print("Receiving Message")
+        msg = conn.recv(8)
         if len(msg) <=0:
             break
         full_msg = full_msg + msg.decode("utf-8")
@@ -65,20 +67,24 @@ db_table(db_conn) #Create user table if it doesn't exist
 sock=tcp_connect('localhost',8001) #Setting up server
 while True:
     print("Waiting for connection\n")
-    connection, client_address = sock.accept()
-    print("Connection with {address} has been established\n")
+    conn, address = sock.accept()
+    print("Connection has been established with: ",address,"\n")
 
-    recvMsg = tcp_receive(sock)
-    if(recvMsg=="1+\n"):
-        tcp_send("Registerting",sock) #Letting client know 
-        username=tcp_receive(sock) #Listen for username
-        password=tcp_receive(sock) #Listen for password
+    recvMsg = tcp_receive(conn)
+    print(recvMsg)
+    if(recvMsg=="1\n"):
+        tcp_send("Registerting",conn) #Letting client know 
+        username=tcp_receive(conn) #Listen for username
+        password=tcp_receive(conn) #Listen for password
         username=username.strip('\n') #Removing backslash
         password=password.strip('\n')
         db_insert(db_conn,username,password)
-        tcp_send("Registered",sock)
+        tcp_send("Registered",conn)
 
-    elif(recvMsg=="2+\n"): #Debugging Connection  
-        tcp_send("Hello this is server",connection)
-        tcp_close(connection)
+    elif(recvMsg=="2\n"): #Debugging Connection  
+        tcp_send("Hello this is server",conn)
+        tcp_close(conn)
+    else:
+        tcp_send("Exception message: Some Error in message",conn)
+        tcp_close(conn)
 

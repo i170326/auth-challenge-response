@@ -39,9 +39,10 @@ while True:
 
     #Menu - add UI later
     option = (input("Choose from the following\n1. Press 1 for Registeration.\n2.Press 2 for Server's Message"))
-
-    if option=="1": #Registeration
-        tcp_send("1",sock) #Letting server know the option
+    print(option)
+    if (option=='1'): #Registeration
+        tcp_send("1",sock)
+        print("Message sent") #Letting server know the option
         recvMsg = tcp_receive(sock)
         if(recvMsg=="Registerting\n"): #Server has started registering
             username=input("Enter username: ")
@@ -54,7 +55,7 @@ while True:
                 break
 
 
-    elif option=="2": #Debugging connection
+    elif option=='2': #Debugging connection
         tcp_send("2",sock)
         recvMsg = tcp_receive(sock)
         if(len(recvMsg)>0):
