@@ -18,3 +18,13 @@ Python: 3.7.9
 	client: send password.hash =>listen
 	server: insert into db => send(registeration successful)
 8. Test registeration
+9. Add database fetch function
+10. Login User Functionality:
+	server: listen
+	client: choose option to login => listen
+	server: if option=login -> send(login)=>listen for username
+	client: send username
+	server: listen
+	client: send password.hash=>listen
+	server: check with db =>send(logged in or error)
+11. Test login
